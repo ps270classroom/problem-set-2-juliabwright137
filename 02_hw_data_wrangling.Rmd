@@ -54,13 +54,13 @@ fb_ads <-
   read_csv("data/fb_ads.csv")
 
 #number of candidates
-number_of_candidates <- n_distinct(fb_ads$cand_name)
+number_of_candidates <- (fb_ads$cand_name)
 
 print(number_of_candidates)
 
 # table with incumbency status
-incumbency_table <- summarize(group_by(fb_ads, incumbency),
-         number_of_candidates = n_distinct(cand_name))
+incumbency_table <- (group_by(fb_ads, incumbency)) |>
+                       summarize(number_of_candidates =(cand_name))
 
 # display table 
 knitr::kable(incumbency_table)
