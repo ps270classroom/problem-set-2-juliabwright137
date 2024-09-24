@@ -1,6 +1,6 @@
 ---
 title: "Problem Set 2: Data Wrangling"
-author: Your Name Here
+author: Julia Wright
 output: pdf_document
 ---
 
@@ -44,8 +44,29 @@ Use `dplyr` functions to create a table with the number of candidates in each ty
  **Rubric**: 2pt for loading the data (autograder); 1pt for describing the number of candidates (PDF); 3pts for creating the table (autograder); 2pt for using `kable()` to nicely format the output (PDF)
 
 ## Answer 1
+```{r}
+library(readr)
+library(dplyr)
+library(knitr)
+ 
+#data in csv file
+fb_ads <- 
+  read_csv("data/fb_ads.csv")
 
+#number of candidates
+number_of_candidates <- n_distinct(fb_ads$cand_name)
 
+print(number_of_candidates)
+
+# table with incumbency status
+incumbency_table <- summarize(group_by(fb_ads, incumbency),
+         number_of_candidates = n_distinct(cand_name))
+
+# display table 
+knitr::kable(incumbency_table)
+```
+
+There are 6928 candidates. 
 
 \newpage
 
