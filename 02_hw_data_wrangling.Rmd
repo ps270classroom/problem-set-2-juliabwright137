@@ -131,7 +131,7 @@ fb_ads <- fb_ads |>
 house_races <- fb_ads |>
   filter(office == "US House")
 
-plot_q3 <- ggplot(house_races, mapping = aes(x = impressions_millions, fill = "pink", color = "black")) + 
+plot_q3 <- ggplot(house_races, mapping = aes(x = impressions_millions)) + 
   geom_histogram(fill = "pink", color = "black") +
   labs(title = "Facebook Ad Impressions for US House Races", 
        x = "Impressions", y = "Number of Candidates")
@@ -181,8 +181,8 @@ house_top15 <- house_races |>
   slice_max(impressions_millions, n = 15)
 
 fb_top_plot <- ggplot(house_top15, aes(x = impressions_millions, 
-    y =fct_reorder(cand_name_last, impressions_millions), fill = party)) +
-  geom_col() + 
+    y =fct_reorder(cand_name_last, impressions_millions))) +
+  geom_col(aes(fill = party)) + 
   scale_fill_manual(values = c(R = "red", D = "blue")) +
   labs(x = "Facebook Ad Impressions (in millions)", 
        y = "Last Name of Candidate", 
