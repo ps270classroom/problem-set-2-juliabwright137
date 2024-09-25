@@ -49,26 +49,23 @@ library(readr)
 library(dplyr)
 library(knitr)
  
-#data in csv file
 fb_ads <- 
   read_csv("data/fb_ads.csv") 
 fb_ads
 
-#number of candidates
-number_of_candidates <- (fb_ads$cand_name)
+number_of_candidates <- n_distinct(fb_ads$cand_name)
+print(paste("Total number of candidates:", number_of_candidates))
 
 print(number_of_candidates)
 
-# table with incumbency status
 incumbency_table <- fb_ads |>
   group_by(incumbency) |>        
-  summarize(number_of_candidates = (cand_name))
+  summarize(number_of_candidates = n())
 
-# display table 
 knitr::kable(incumbency_table)
 ```
 
-There are 7014 candidates. ***
+There are 6928 candidates. 
 
 \newpage
 
@@ -88,9 +85,10 @@ In the writeup, describe which type of candidate sponsored the most promoting ad
 
 ## Answer 2
 
-```{r eval = FALSE}
+```{r}
 library(dplyr)
 library(knitr)
+library(readr)
 
 party_incumbent_promote <- fb_ads |>
   filter(office %in% c("US House","US Senate")) |>
