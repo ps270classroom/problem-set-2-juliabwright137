@@ -56,7 +56,7 @@ fb_ads
 number_of_candidates <- n_distinct(fb_ads$cand_name)
 print(paste("Total number of candidates:", number_of_candidates))
 
-print(number_of_candidates)
+print(number_of_candidates) 
 
 incumbency_table <- fb_ads |>
   group_by(incumbency) |>        
@@ -90,6 +90,10 @@ library(dplyr)
 library(knitr)
 library(readr)
 
+fb_ads <- 
+  read_csv("data/fb_ads.csv") 
+fb_ads
+
 party_incumbent_promote <- fb_ads |>
   filter(office %in% c("US House","US Senate")) |>
   group_by(party, incumbency) |>
@@ -113,6 +117,29 @@ Create a histogram of this variable for just the US House races. Save the ggplot
  **Rubric:** 2pt for creating the new variable (autograder); 3pts for creating the histogram object (autograder); 2pts for answering the question about the histogram (PDF)
 
 ## Answer 3
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+
+fb_ads <- read_csv("data/fb_ads.csv")
+
+
+fb_ads <- fb_ads |>
+  mutate(impressions_millions = impressions/1e6)
+
+house_races <- fb_ads |>
+  filter(office == "US House")
+
+
+plot_q3 <- ggplot(house_races, aes(x=impressions_millions)) + 
+  geom_histogram(binwidth = 1, fill="pink", color = "black", alpha = 0.5 ) +
+  labs(title = "Facebook Ad Impressions for US House Races", 
+       x = "Impressions", y = "Number of Candidates")
+
+print(plot_q3)
+```
 
 
 
