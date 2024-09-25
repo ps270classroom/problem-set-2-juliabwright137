@@ -125,20 +125,18 @@ library(ggplot2)
 
 fb_ads <- read_csv("data/fb_ads.csv")
 
-
 fb_ads <- fb_ads |>
   mutate(impressions_millions = impressions/1000000)
 
 house_races <- fb_ads |>
   filter(office == "US House")
 
-
-plot_q3 <- ggplot(house_races, aes(x=impressions_millions)) + 
-  geom_histogram(binwidth = 1, fill="pink", color = "black", alpha = 0.5 ) +
+plot_q3 <- ggplot(house_races, mapping = aes(x = impressions_millions, fill = "pink", color = "black")) + 
+  geom_histogram(fill = "pink", color = "black") +
   labs(title = "Facebook Ad Impressions for US House Races", 
        x = "Impressions", y = "Number of Candidates")
 
-print(plot_q3)
+plot_q3
 ```
 
 
@@ -163,6 +161,35 @@ You do not need to exactly match the labels, but you should have informative lab
  **Rubric:** 3pts for correct axes (autograder); 3pts for correct data fed into `ggplot` (autograder); 3pts for the correct ordering of the y-axis (PDF); 3pts for fill being mapped to `party` (autograder); 1pt for plot being in knitted output and having informative labels (PDF)
 
 ## Answer 4
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(knitr)
+library(forcats)
+library(readr)
+
+fb_ads <- read_csv("data/fb_ads.csv")
+
+fb_ads <- fb_ads |>
+  mutate(impressions_millions = impressions/1000000)
+
+house_races <- fb_ads |>
+  filter(office == "US House")
+
+house_top15 <- house_races |>
+  slice_max(impressions_millions, n = 15)
+
+fb_top_plot <- ggplot(house_top15, aes(x = impressions_millions, 
+    y =fct_reorder(cand_name_last, impressions_millions), fill = party)) +
+  geom_col() + 
+  scale_fill_manual(values = c(R = "red", D = "blue")) +
+  labs(x = "Facebook Ad Impressions (in millions)", 
+       y = "Last Name of Candidate", 
+       title = "Top 15 House Candidate Facebook Ad Impressions, 2017-2018")
+
+fb_top_plot
+```
 
 
 
