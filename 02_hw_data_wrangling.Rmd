@@ -127,7 +127,7 @@ fb_ads <- read_csv("data/fb_ads.csv")
 
 
 fb_ads <- fb_ads |>
-  mutate(impressions_millions = impressions/1e6)
+  mutate(impressions_millions = impressions/1000000)
 
 house_races <- fb_ads |>
   filter(office == "US House")
