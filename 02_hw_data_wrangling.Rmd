@@ -65,11 +65,18 @@ incumbency_table <- fb_ads |>
 knitr::kable(incumbency_table)
 ```
 
-There are 6928 candidates. 
+The total number of candidates is 6928. I received this number by running these lines of code:
+
+number_of_candidates <- n_distinct(fb_ads$cand_name)
+print(paste("Total number of candidates:", number_of_candidates))
+
+print(number_of_candidates) 
+
+The output that I received was 6928. 
 
 \newpage
 
-## Question 2 (7 points)
+## Question 2 (7 points) 
 
 Filter the data to just US House and US Senate races and use this to create a tibble called `party_incumbent_promote` that has 6 rows that summarizes the average of `ad_tone_promote` for each combination of `party` and `incumbency`. Call the variable summarizing the promote variable as `promote_prop` and be sure to remove any missing values when computing the averages. 
 
@@ -103,6 +110,7 @@ knitr::kable(party_incumbent_promote, col.names =
                c("Party", "Incumbency Status", "Promote Proportion"), digits = 3)
 
 ```
+The type of candidate who sponsored the most promoting ads on average is the Democratic incumbents. We know this because when we look at the party_incumbent_promote table that is generated, the Democratic incumbents have the highest value in the promote_prop column of 0.8544311.  
 
 
 \newpage
@@ -134,11 +142,11 @@ house_races <- fb_ads |>
 plot_q3 <- ggplot(house_races, mapping = aes(x = impressions_millions)) + 
   geom_histogram(fill = "pink", color = "black") +
   labs(title = "Facebook Ad Impressions for US House Races", 
-       x = "Impressions", y = "Number of Candidates")
+       x = "Impressions (millions)", y = "Number of Candidates")
 
 plot_q3
 ```
-
+The histogram has a greater distribution on the left, meaning that it is actually right skewed. Most of the House candidates did not have more than 10 million ads impressions on facebook. We can tell by looking at the 10 million marker on the x axis and then examining the number of candidates that have 10 million or more impressions. The number is very small. 
 
 
 \newpage
