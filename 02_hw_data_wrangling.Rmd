@@ -53,7 +53,7 @@ fb_ads <-
   read_csv("data/fb_ads.csv") 
 fb_ads
 
-number_of_candidates <- n_distinct(fb_ads$cand_name)
+number_of_candidates <- nrow(unique(data.frame(fb_ads$cand_name)))
 print(paste("Total number of candidates:", number_of_candidates))
 
 print(number_of_candidates) 
